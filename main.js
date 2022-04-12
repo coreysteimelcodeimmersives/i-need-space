@@ -1,6 +1,12 @@
 let searchButton = document.querySelector('#search');
+let riseDateTime = document.querySelector('#riseDateTime');
+let culminationDateTime = document.querySelector('#culminationDateTime');
+let setDateTime = document.querySelector('#setDateTime');
 
 searchButton.addEventListener('click', function () {
+    riseDateTime.innerText = '';
+    culminationDateTime.innerText = '';
+    setDateTime.innerText = '';
     getSatInfo();
 });
 
@@ -26,9 +32,6 @@ let getLatLong = async () => {
 let getSatInfo = async () => {
     let latLonArr = await getLatLong();
     let satInput = document.querySelectorAll('input[name="satellite"]');
-    let riseDateTime = document.querySelector('#riseDateTime');
-    let culminationDateTime = document.querySelector('#culminationDateTime');
-    let setDateTime = document.querySelector('#setDateTime');
     let satVal;
     for (const sat of satInput) {
         if (sat.checked) {
@@ -39,6 +42,7 @@ let getSatInfo = async () => {
     console.log('satVal');
     console.log(satVal);
     let satURL = `https://satellites.fly.dev/passes/${satVal}?lat=${latLonArr[1]}&lon=${latLonArr[0]}&limit=1&days=15&visible_only=true`;
+    console.log(satURL);
     let httpRes = await fetch(satURL);
     let data = await httpRes.json();
     riseDateTime.innerText = data[0].rise.utc_datetime;
