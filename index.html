@@ -13,37 +13,28 @@
 <body>
 
     <div class="content">
-
-        <h1>
-            When can I see a certain satellite?
-        </h1>
         
+        <div id='mainHeader'>
+            <h1>
+                When can I see a certain satellite?
+            </h1>
+        </div>
         <div class="section">
             <div class="row">
                 <h2>
                     Find Next Satellite Pass
                 </h2>
             </div>
-            <div class="row">
+            <div class="row inputRow">
                 <label>Mapbox API Key</label>
-                <input id="api-key" />
+                <input class='satPassInput laptop' id="api-key-laptop">
+                <textarea class='satPassInput mobile' id="api-key-mobile"></textarea>
             </div>
-            <div class="row">
+            <div class="row inputRow">
                 <label>Address</label>
-                <input id="address" />
+                <input class='satPassInput laptop' id="address-laptop">
+                <textarea class='satPassInput mobile' id="address-mobile"></textarea>
             </div>
-            <div class="row">
-                <label>Satellite NORAD</label>
-                <input id="norad" />
-            </div>
-            <div class="row">
-                <button id="search">
-                    Search
-                </button>
-            </div>
-        </div>
-
-        <div class="section">
             <div class="row">
                 <h2>
                     Notable Satellites
@@ -51,13 +42,20 @@
             </div>
             <div class="row">
                 <div class="title">
+                    <b>Selection</b>
+                </div>
+                <div class="title">
                     <b>Name</b>
                 </div>
                 <div class="title">
-                    <b>NORAD (Satellite ID)</b>
+                    <b class='laptop'>NORAD (Satellite ID)</b>
+                    <b class='mobile'>NORAD Id</b>
                 </div>
             </div>
             <div class="row">
+                <div class="item">
+                    <input type="radio" id='intSpaceStation' value='25544' name='satellite' checked>
+                </div>
                 <div class="item">
                     Int. Space Station
                 </div>
@@ -67,6 +65,9 @@
             </div>
             <div class="row">
                 <div class="item">
+                    <input type="radio" id='intSpaceStation' value='20580' name='satellite'>
+                </div>
+                <div class="item">
                     Hubble Space Telescope
                 </div>
                 <div class="item">
@@ -74,6 +75,9 @@
                 </div>
             </div>
             <div class="row">
+                <div class="item">
+                    <input type="radio" id='intSpaceStation' value='46920' name='satellite'>
+                </div>
                 <div class="item">
                     SpaceX Dragon
                 </div>
@@ -84,11 +88,54 @@
             <div class="row">
                 <b>Find more of the brightest satellites' NORAD IDs&nbsp;<a href="https://www.n2yo.com/satellites/?c=1">here</a>.</b>
             </div>
+            <div class="row">
+                <button id="search">
+                    Search
+                </button>
+            </div>
+        </div>
+
+        <!-- <div class="section">
+            
+        </div> -->
+
+        <div class='section'>
+            <div class="row">
+                <h2>
+                    Satellite Viewing Information
+                </h2>
+            </div>
+            <div class="row">
+                <div class="title">
+                    <b>Pass Position</b>
+                </div>
+                <div class="title">
+                    <b>Date & Time</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="item">
+                    Rise
+                </div>
+                <div class="item" id='riseDateTime'></div>
+            </div>
+            <div class="row">
+                <div class="item">
+                    Culmination
+                </div>
+                <div class="item" id='culminationDateTime'></div>
+            </div>
+            <div class="row">
+                <div class="item">
+                    Set
+                </div>
+                <div class="item" id='setDateTime'></div>
+            </div>
         </div>
 
     </div>
 
-    <script src="apiKey.js"></script>
+    <!-- <script src="apiKey.js"></script> -->
     <script src="main.js"></script>
 </body>
 </html>
