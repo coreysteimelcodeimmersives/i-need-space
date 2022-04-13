@@ -60,15 +60,99 @@ let getSatInfo = async () => {
         let data = await httpRes.json();
         console.log('data');
         console.log(data);
-        if (data.length < 4) {
+        if (data.length < 1) {
             alert('Something is not right.\nPlease try a different address, NORDA Id, or both.');
             riseDateTime.innerText = '';
             culminationDateTime.innerText = '';
             setDateTime.innerText = '';
         } else {
+            let riseTimeVar = data[0].rise.utc_datetime;
+            // riseTimeVar = new Date(riseTimeVar);
+            // console.log('formatted date time');
+            // console.log(riseTimeVar);
+            // let riseMonth = monthName(Date.prototype.getMonth(riseTimeVar));
+            // let riseDayOfWeek = dayName(Date.prototype.getDay(riseTimeVar)); 
+            // let riseDate = Date.prototype.getDate(riseTimeVar);
+            // let riseHour = twelveHourTime(Date.prototype.getHours(riseTimeVar));
+            // let riseMin = formatFiftyNineTime(Date.prototype.getMinutes(riseTimeVar));
+            // let riseSec = formatFiftyNineTime(Date.prototype.getSeconds(riseTimeVar));
+            // let riseAmPm = getAmPm(Date.prototype.getHours(riseTimeVar));
+            // riseDateTime.innerText = `${riseDayOfWeek}, ${riseMonth} ${riseDate} at ${riseHour}:${riseMin}.${riseSec} ${riseAmPm}`;
             riseDateTime.innerText = data[0].rise.utc_datetime;
             culminationDateTime.innerText = data[0].culmination.utc_datetime;
             setDateTime.innerText = data[0].set.utc_datetime;
         }
+    }
+}
+
+let getAmPm = (num) => {
+    if (num > 11){
+        return 'pm'
+    } else {
+        return 'am'
+    }
+}
+
+let formatFiftyNineTime = (num) => {
+    if (num < 10){
+        return '0'+num;
+    } else {
+        return num;
+    }
+}
+
+let twelveHourTime = (num) => {
+    if (num > 12){
+        return num - 12;
+    } else if (num == 0){
+        return 12;
+    } else {
+        return num;
+    }
+}
+
+let dayName = (num) => {
+    if (num == 0){
+        return 'Sunday'
+    } else if (num == 1){
+        return 'Monday'
+    } else if (num == 2){
+        return 'Tuesday'
+    } else if (num == '3'){
+        return 'Wednesday'
+    } else if (num == '4'){
+        return 'Thursday'
+    } else if (num == '5'){
+        return 'Friday'
+    } else if (num == '6'){
+        return 'Saturday'
+    }
+};
+
+let monthName = (num) => {
+    if (num == 0){
+        return 'Jan'
+    } else if (num == 1){
+        return 'Feb'
+    } else if (num == 2){
+        return 'Mar'
+    } else if (num == 3){
+        return 'Apr'
+    } else if (num == 4){
+        return 'May'
+    } else if (num == 5){
+        return 'Jun'
+    } else if (num == 6){
+        return 'Jul'
+    } else if (num == 7){
+        return 'Aug'
+    } else if (num == 8){
+        return 'Sep'
+    } else if (num == 9){
+        return 'Oct'
+    } else if (num == 10){
+        return 'Nov'
+    } else if (num == 11){
+        return 'Dec'
     }
 }
