@@ -26,26 +26,49 @@ let getLatLong = async () => {
     console.log(addressInputMobile.value)
     let httpRes = await fetch(mapURL);
     let data = await httpRes.json();
-    return data.features[0].center;
+    if (data.features == null) {
+        return 'bad address';
+    } else {
+        return data.features[0].center;
+    }
 }
 
 let getSatInfo = async () => {
     let latLonArr = await getLatLong();
-    let satInput = document.querySelectorAll('input[name="satellite"]');
-    let satVal;
-    for (const sat of satInput) {
-        if (sat.checked) {
-            satVal = sat.value;
-            break;
+    if (latLonArr == 'bad address') {
+        alert('Something is not right.\nPlease try a different address.');
+    } else {
+        console.log('latLonArr')
+        console.log(latLonArr);
+        if (latLonArr < 2 || !latLonArr) {
+            alert('Something is not right.\nPlease try a different address.');
+        }
+        let satInput = document.querySelectorAll('input[name="satellite"]');
+        let satVal;
+        for (const sat of satInput) {
+            if (sat.checked) {
+                satVal = sat.value;
+                break;
+            }
+        }
+        console.log('satVal');
+        console.log(satVal);
+        let satURL = `https://satellites.fly.dev/passes/${satVal}?lat=${latLonArr[1]}&lon=${latLonArr[0]}&limit=1&days=15&visible_only=true`;
+        console.log('sat url')
+        console.log(satURL);
+        let httpRes = await fetch(satURL);
+        let data = await httpRes.json();
+        console.log('data');
+        console.log(data);
+        if (data.length < 4) {
+            alert('Something is not right.\nPlease try a different address, NORDA Id, or both.');
+            riseDateTime.innerText = '';
+            culminationDateTime.innerText = '';
+            setDateTime.innerText = '';
+        } else {
+            riseDateTime.innerText = data[0].rise.utc_datetime;
+            culminationDateTime.innerText = data[0].culmination.utc_datetime;
+            setDateTime.innerText = data[0].set.utc_datetime;
         }
     }
-    console.log('satVal');
-    console.log(satVal);
-    let satURL = `https://satellites.fly.dev/passes/${satVal}?lat=${latLonArr[1]}&lon=${latLonArr[0]}&limit=1&days=15&visible_only=true`;
-    console.log(satURL);
-    let httpRes = await fetch(satURL);
-    let data = await httpRes.json();
-    riseDateTime.innerText = data[0].rise.utc_datetime;
-    culminationDateTime.innerText = data[0].culmination.utc_datetime;
-    setDateTime.innerText = data[0].set.utc_datetime;
 }
